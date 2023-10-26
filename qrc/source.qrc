@@ -1,0 +1,42 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>../images/tools.png</file>
+    <file>../images/customercare.png</file>
+    <file>../images/scanner.png</file>
+    <file>../images/feedback.png</file>
+    <file>../images/question.png</file>
+    <file>../images/data-visualization.png</file>
+    <file>../images/bug-detector.png</file>
+    <file>../images/progress.png</file>
+    <file>../images/qr-code-scan.png</file>
+    <file>../images/verified.png</file>
+    <file>../images/question.png</file>
+    <file>../images/Malx logo.png</file>
+    <file>../images/Malx logo.png</file>
+    <file>../images/Malx logo.png</file>
+    <file>../images/dnd.png</file>
+    <file>../Downloads/WhatsApp Image 2023-08-01 at 22.33.40.png</file>
+  </qresource>
+  <qresource prefix="newPrefix">
+    <file>../images/guide.png</file>
+  </qresource>
+  <qresource prefix="newPrefix">
+    <file>../images/search-file.png</file>
+  </qresource>
+  <qresource prefix="newPrefix">
+    <file>../images/file.png</file>
+    <file>../images/verified.png</file>
+  </qresource>
+  <qresource prefix="newPrefix">
+    <file>../images/settings.png</file>
+  </qresource>
+  <qresource prefix="newPrefix">
+    <file>../images/bell.png</file>
+  </qresource>
+  <qresource prefix="newPrefix">
+    <file>../images/user.png</file>
+  </qresource>
+  <qresource prefix="newPrefix">
+    <file>../images/Malx logo.png</file>
+  </qresource>
+</RCC>
