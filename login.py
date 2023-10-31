@@ -1,13 +1,15 @@
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import QLabel, QWidget, QPushButton, QLineEdit, QMessageBox, QApplication, QVBoxLayout
+from PyQt5.QtWidgets import QLabel, QWidget, QPushButton, QLineEdit,QMessageBox,QApplication
 from PyQt5.QtGui import QFont
+from qrc import source_rc
 import requests
 from my_header import HeaderWidget
 
+
 class Ui_loginwindow(QtWidgets.QWidget):
-    def __init__(self, parent):
+    def __init__(self,parent):
         super().__init__()
-        self.main_window = parent
+        self.main_window=parent
         self.setupUi()
 
     def opensignup(self):
@@ -16,15 +18,17 @@ class Ui_loginwindow(QtWidgets.QWidget):
     def openwindow(self):
         email = self.Emailfield.text()
         password = self.Emailfield_2.text()
-        print(email, password)
-        api_url = 'https://abidali1999063.pythonanywhere.com/login_api'
+        print(email,password)
+        api_url = 'https://abidali1999063.pythonanywhere.com/login_api'  # Replace with your actual API URL
         data = {
             'email': email,
             'password': password
         }
         response = requests.post(api_url, json=data)
-        if response.status_code == 200:
-            self.main_window.isloggedin = True
+        # print(response.status_code,response.text)
+        # self.main_window.showDashboard()
+        if response.status_code == 200: 
+            self.main_window.isloggedin=True
             self.main_window.showDashboard()
         else:
             msg = QMessageBox()
@@ -35,52 +39,56 @@ class Ui_loginwindow(QtWidgets.QWidget):
 
     def setupUi(self):
         self.centralwidget = QWidget(self)
-        self.setWindowTitle("Login Window")
-        self.resize(600, 400)
-
-        self.layout = QVBoxLayout(self)
-
-        self.header = HeaderWidget(self.main_window, self.centralwidget)
-        self.layout.addWidget(self.header)
-
-        self.formLayout = QVBoxLayout()
-
-        self.Emailfield = QLineEdit(self)
-        self.Emailfield.setPlaceholderText("Enter Email")
-        self.Emailfield.setMinimumHeight(40)  # Increase the height
-        self.formLayout.addWidget(self.Emailfield)
-
-        self.Emailfield_2 = QLineEdit(self)
-        self.Emailfield_2.setPlaceholderText("Enter Password")
+        self.resize(1096, 900)
+        self.header=HeaderWidget(self.main_window,self.centralwidget)
+        self.pushButton_2 = QPushButton(self.centralwidget)
+        self.pushButton_2.setGeometry(440, 400, 121, 41)
+        self.pushButton_2.setStyleSheet("background-color: white;\n""color: black;\n""border: 1px solid black;\n""font-weight: bold;\n""font-size: 14px;")
+        self.pushButton_2.setObjectName("pushButton_2")
+        self.pushButton_2.clicked.connect(self.opensignup)
+        # self.label = QtWidgets.QLabel(self.centralwidget)
+        # self.label.setGeometry(QtCore.QRect(340, 70, 151, 121))
+        # self.label.setStyleSheet("image:url(:/newPrefix/images/Malx logo.png);\n""text-align:center;\n""margin:0px auto;")
+        # self.label.setText("")
+        # self.label.setObjectName("label")
+        self.Emailfield_2 = QLineEdit(self.centralwidget)
+        self.Emailfield_2.setGeometry(240, 320, 321, 41)
+        font = QFont()
+        font.setPointSize(11)
+        self.Emailfield_2.setFont(font)
+        self.Emailfield_2.setStyleSheet("border: 1px solid black;")
         self.Emailfield_2.setEchoMode(QLineEdit.Password)
-        self.Emailfield_2.setMinimumHeight(40)  # Increase the height
-        self.formLayout.addWidget(self.Emailfield_2)
-
-        self.loginbtn = QPushButton("LOGIN", self)
-        self.loginbtn.setStyleSheet("background-color: black; color: white; font-weight: bold; font-size: 14px;")
-        self.loginbtn.setMinimumHeight(40)  # Increase the height
+        self.Emailfield_2.setObjectName("Emailfield_2")
+        self.Emailfield = QLineEdit(self.centralwidget)
+        self.Emailfield.setGeometry(240, 240, 321, 41)
+        self.Emailfield.setFont(font)
+        self.Emailfield.setStyleSheet("border: 1px solid black;")
+        self.Emailfield.setObjectName("Emailfield")
+        self.label_2 = QLabel(self.centralwidget)
+        self.label_2.setGeometry(240, 450, 121, 21)
+        self.label_2.setStyleSheet("font-size: 15px;")
+        self.label_2.setObjectName("label_2")
+        self.loginbtn = QPushButton(self.centralwidget)
+        self.loginbtn.setGeometry(240, 400, 121, 41)
+        self.loginbtn.setStyleSheet("background-color: black;\n""color: white;\n""border: 1px solid black;\n""font-weight: bold;\n""font-size: 14px;")
+        self.loginbtn.setObjectName("loginbtn")
         self.loginbtn.clicked.connect(self.openwindow)
-        self.formLayout.addWidget(self.loginbtn)
+        self.retranslateUi(self)
 
-        self.signupbtn = QPushButton("SIGN UP", self)
-        self.signupbtn.setStyleSheet("background-color: white; color: black; border: 1px solid black; font-weight: bold; font-size: 14px;")
-        self.signupbtn.setMinimumHeight(40)  # Increase the height
-        self.signupbtn.clicked.connect(self.opensignup)
-        self.formLayout.addWidget(self.signupbtn)
+    def retranslateUi(self, loginwindow):
+        _translate = QtCore.QCoreApplication.translate        
+        loginwindow.setWindowTitle(_translate("loginwindow", "MainWindow"))
+        self.pushButton_2.setText(_translate("loginwindow", "SIGN UP"))
+        self.Emailfield_2.setPlaceholderText(_translate("loginwindow", "Enter Password"))
+        self.Emailfield.setPlaceholderText(_translate("loginwindow", "Enter Email"))
+        self.label_2.setText(_translate("loginwindow", "Forgot Password"))
+        self.loginbtn.setText(_translate("loginwindow", "LOGIN"))
 
-        self.forgotPasswordLabel = QLabel("Forgot Password", self)
-        self.forgotPasswordLabel.setStyleSheet("font-size: 15px;")
-        self.formLayout.addWidget(self.forgotPasswordLabel)
 
-        self.layout.addLayout(self.formLayout)
-
-    def resizeEvent(self, event):
-        # Adjust widget sizes when the window is resized
-        self.header.resize(self.width(), self.header.height())
-
-if __name__ == '__main__':
+if __name__=='__main__':
     import sys
     app = QApplication(sys.argv)
     window = Ui_loginwindow(app)
     window.show()
     sys.exit(app.exec_())
+

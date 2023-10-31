@@ -28,7 +28,7 @@ class ProgressWindow(QWidget):
         progress_bar.setFixedSize(451, 41)
 
         # Set a fixed stretch factor to control the spacing
-        self.layout.addWidget(label)
+        self.body_layout.addWidget(label)
 
         self.progress_bars.append(progress_bar)  # Add the progress bar to the list
         return progress_bar  # Return the progress bar for further updates
@@ -39,14 +39,18 @@ class ProgressWindow(QWidget):
 
     def setup_UI(self):
         self.centralwidget = QWidget(self)
-        self.centralwidget.setFixedSize(1096, 800)
+        self.centralwidget.resize(1096, 800)
         self.centralwidget.setObjectName("centralwidget")
         self.progress_bars = []  # Create a list to store progress bars
-        self.layout = QVBoxLayout()
+        self.body_layout = QVBoxLayout()
+        self.main_layout=QVBoxLayout()
         self.header=HeaderWidget(self.main_window,self.centralwidget)
         # self.header.setFixedSize(1100,200)
         self.body=QWidget(self.centralwidget)
-        self.body.setLayout(self.layout)
+        self.body.setLayout(self.body_layout)
+        self.main_layout.addWidget(self.header)
+        self.main_layout.addWidget(self.body)
+        self.centralwidget.setLayout(self.main_layout)
         # self.body.setContentsMargins
         # self.body.setGeometry(QRect(0, 250, 1100, 550))
         self.pushButton_5=PushButton(self.centralwidget,True)

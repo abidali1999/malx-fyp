@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QFileDialog,QLabel
 from PyQt5.QtCore import QThread
 from MyPushButton import PushButton
 from PyQt5 import QtCore, QtWidgets
@@ -31,6 +31,8 @@ class DirectoryScan(QtWidgets.QWidget):
         self.pushButton_3.setStyleSheet("background:black;\n""color:#fff;\n""border:1px solid black;\n""font-weight:bold;\n""font-size:14px;")
         self.pushButton_3.setObjectName("pushButton_3")
         self.pushButton_3.clicked.connect(self.choose_scan_directory)
+        self.choosen_directory=QLabel(self.centralwidget)
+        self.choosen_directory.setGeometry(QtCore.QRect(430, 600, 430, 41))
         self.pushButton_4 = PushButton(self.centralwidget,True)
         self.pushButton_4.setGeometry(QtCore.QRect(140, 660, 121, 41))
         self.pushButton_4.setStyleSheet("background:black;\n""color:#fff;\n""border:1px solid black;\n""font-weight:bold;\n""font-size:14px;")
@@ -88,7 +90,7 @@ class DirectoryScan(QtWidgets.QWidget):
         self.main_window.progress_window.set_progress(value,progid)
 
     def go_back(self):
-        print('goind back')
+        print('going back')
         # self.pushButton_4.setText("Back")
         # self.pushButton_4.disconnect()
         # self.pushButton_4.clicked.connect(self.toggle_scan)
@@ -97,6 +99,7 @@ class DirectoryScan(QtWidgets.QWidget):
         self.selected_directory=QFileDialog.getExistingDirectory(
             None, "Select a directory for scanning")
         print(self.selected_directory)
+        self.choosen_directory.setText(self.selected_directory)
 
     def make_scan_entry(self,directory,threats_found,date_today,scanned_files,total_time,threats_quarantined):
         import requests

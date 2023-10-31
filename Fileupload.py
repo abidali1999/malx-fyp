@@ -6,6 +6,9 @@ from MyPushButton import PushButton
 from drag_n_drop import DragnDropLabel
 from qrc import source_rc
 from my_header import HeaderWidget
+from byteplot import create_byteplot_image
+import joblib
+import cv2
 
 
 class Ui_Fileupload(QtWidgets.QWidget):
@@ -14,7 +17,6 @@ class Ui_Fileupload(QtWidgets.QWidget):
         self.main_window=window
         self.selected_file_path = None
         self.setupUi()
-        
         
     def select_file(self):
         options = QFileDialog.Options()
@@ -28,18 +30,17 @@ class Ui_Fileupload(QtWidgets.QWidget):
         if self.selected_file_path:
             from keras.preprocessing import image
             from keras.models import load_model
-            image_size=(192,192)
-            model = load_model('projekt_fyp\\model\\m192_v2.h5')
-            img = image.load_img(self.selected_file_path, target_size=image_size, color_mode='grayscale')
+            # image_size=(192,192)
+            model = load_model('projekt_fyp\\model\\m192_v3.h5')
+            img=create_byteplot_image(self.selected_file_path)
             img_array = image.img_to_array(img)
             img_array = np.expand_dims(img_array, axis=0)
             img_array /= 255.0  
             predictions = model.predict(img_array)            
             predicted_class_index = np.argmax(predictions)
-            code_to_class={19: 'TrojanWin32Delf.KP', 13: 'RogueWin32Defmid', 20: 'WormWin32Vobfus.gen!D', 3: 'BackdoorWin32PcClient.BX', 18: 'TrojanWin32Agent', 12: 'PWSWin32OnLineGames.JB', 2: 'BackdoorWin32Kelihos.F', 4: 'BackdoorWin32Rbot', 8: 'ExploitWin32Pdfjsc.RF', 6: 'DialerWin32InstantAccess', 1: 'AdwareWin32SaveShare', 5: 'BackdoorWin32Zegost.AD', 14: 'TrojanDownloaderWin32Beebone.FN', 17: 'TrojanSpyWin32Tiop.A', 15: 'TrojanDropperWin32Systex.A', 0: 'AdwareWin32Gabpath', 11: 'PWSWin32OnLineGames.IZ', 16: 'TrojanJSBlacoleRef.DF', 7: 'ExploitWin32CVE-2010-0188', 9: 'PWSWin32Ceekat.gen!A', 10: 'PWSWin32Lolyda.BF'}
+            code_to_class={0: 'AdwareWin32Gabpath', 1: 'AdwareWin32SaveShare', 2: 'BackdoorWin32Kelihos.F', 3: 'BackdoorWin32PcClient.BX', 4: 'BackdoorWin32Rbot', 5: 'BackdoorWin32Zegost.AD', 6: 'DialerWin32InstantAccess', 7: 'ExploitWin32CVE-2010-0188', 8: 'ExploitWin32Pdfjsc.RF', 9: 'PWSWin32Ceekat.gen!A', 10: 'PWSWin32Lolyda.BF', 11: 'PWSWin32OnLineGames.IZ', 12: 'PWSWin32OnLineGames.JB', 13: 'RogueWin32Defmid', 14: 'TrojanDownloaderWin32Beebone.FN', 15: 'TrojanDropperWin32Systex.A', 16: 'TrojanJSBlacoleRef.DF', 17: 'TrojanSpyWin32Tiop.A', 18: 'TrojanWin32Agent', 19: 'TrojanWin32Delf.KP', 20: 'WormWin32Vobfus.gen!D', 21: 'benign'}
             class_labels=[]
             for key in sorted(code_to_class.keys()): class_labels.append(code_to_class[key])
-            print(class_labels)
             predicted_class = class_labels[predicted_class_index]
             self.label_9.setText(f'Predicted Class: {predicted_class}')
 
@@ -132,8 +133,6 @@ class Ui_Fileupload(QtWidgets.QWidget):
         self.pushButton_4.setText(_translate("Fileupload", "Browse"))
         self.pushButton_5.setText(_translate("Fileupload", "SCAN"))
         self.pushButton_7.setText(_translate("Fileupload", "Back"))
-
-
 
 
 if __name__ == "__main__":

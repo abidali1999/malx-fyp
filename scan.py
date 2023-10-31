@@ -66,11 +66,12 @@ class UI_scans(QMainWindow):
         self.central_widget = QWidget(self)
         self.setCentralWidget(self.central_widget)
         layout = QVBoxLayout(self.central_widget)
-        data = [[1, 'some directory', 'NO', '10-22-2023', 'boota@gmail.com'],
-                [1, 'some directory', 'NO', '10-22-2023', 'boota@gmail'],
-                [1, 'some directory', 'NO', '10-22-2023', 'boota@gmail.com']]
+        # data = [[1, 'some directory', 'NO', '10-22-2023', 'boota@gmail.com'],
+        #         [1, 'some directory', 'NO', '10-22-2023', 'boota@gmail'],
+        #         [1, 'some directory', 'NO', '10-22-2023', 'boota@gmail.com']]
 
         # Create an instance of the HeaderWidget
+        data=self.load_data()
         header = HeaderWidget(self.main_window,self)
         header.setFixedSize(1096, 91)  # Set a fixed size for the header
         layout.addWidget(header)  # Add the header to the layout
@@ -84,6 +85,7 @@ class UI_scans(QMainWindow):
 
         self.pushButton_5.setObjectName("pushButton_5")
         self.pushButton_5.clicked.connect(self.open_dashboard)
+        self.pushButton_5.setText('Back')
 
 
     def load_data(self):
