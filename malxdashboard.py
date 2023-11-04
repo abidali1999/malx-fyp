@@ -27,6 +27,9 @@ class Dashboard(QtWidgets.QWidget):
     def opensetting(self):
         self.main_window.showsetting()
 
+    def openquarantine(self):
+        self.main_window.showquarantine()
+
 
     def setupUi(self):
         self.centralwidget = QtWidgets.QWidget(self)
@@ -104,18 +107,19 @@ class Dashboard(QtWidgets.QWidget):
         self.classificationimg.setObjectName("classificationimg")
         self.classificationbtn.clicked.connect(self.openscan)
 
-        self.visualizationbtn = QtWidgets.QPushButton(self.centralwidget)
-        self.visualizationbtn.setGeometry(QtCore.QRect(120, 540, 181, 191))
-        self.visualizationbtn.setStyleSheet("border:1px solid black;")
-        self.visualizationbtn.setObjectName("visualizationbtn")
-        self.visualizationlabel = QtWidgets.QLabel(self.centralwidget)
-        self.visualizationlabel.setGeometry(QtCore.QRect(150, 650, 121, 61))
-        self.visualizationlabel.setStyleSheet("font-size:14px;\n""font-weight:bold;\n""line-height:40px;\n""text-align:center\n""")
+        self.qurantinebtn = PushButton(self.centralwidget,True)
+        self.qurantinebtn.setGeometry(QtCore.QRect(120, 540, 181, 191))
+        self.qurantinebtn.setObjectName("visualizationbtn")
+        self.visualizationlabel = QtWidgets.QLabel(self.qurantinebtn)
+        self.visualizationlabel.setGeometry(QtCore.QRect(30, 115, 131, 61))
+        self.visualizationlabel.setStyleSheet("font-size:14px;\n""font-weight:bold;\n""line-height:40px;\n")
         self.visualizationlabel.setObjectName("visualizationlabel")
-        self.visualizationimg = QtWidgets.QLabel(self.centralwidget)
-        self.visualizationimg.setGeometry(QtCore.QRect(150, 570, 121, 91))
-        self.visualizationimg.setStyleSheet("image:url(:/newPrefix/images/data-visualization.png);\n""background-repeat:no-repeat !important;\n""text-align:center !important;\n""margin:0px auto !important;")
+        self.visualizationimg = QtWidgets.QLabel(self.qurantinebtn)
+        self.visualizationimg.setGeometry(QtCore.QRect(30, 25, 121, 91))
+        self.visualizationimg.setStyleSheet("image:url(:/newPrefix/images/data-visualization.png);\n""background-repeat:no-repeat !important;\n""margin:0px auto !important;")
         self.visualizationimg.setObjectName("visualizationimg")
+        self.qurantinebtn.clicked.connect(self.openquarantine)
+
         self.settingbtn = QtWidgets.QPushButton(self.centralwidget)
         self.settingbtn.setGeometry(QtCore.QRect(350, 540, 181, 191))
         self.settingbtn.setStyleSheet("border:1px solid black;")
@@ -177,7 +181,7 @@ class Dashboard(QtWidgets.QWidget):
         self.Directorylabel.setText(_translate("dashboard", "DIRECTORY SCAN"))
         self.progresslabel.setText(_translate("dashboard", "PROGRESS \n""MONITORING"))
         self.classificationlabel.setText(_translate("dashboard", "CLASSIFICATION \n""RESULT"))
-        self.visualizationlabel.setText(_translate("dashboard", "VISUALIZATION"))
+        self.visualizationlabel.setText(_translate("dashboard", "QUARANTINED \nTHREATS"))
         self.settinglabel.setText(_translate("dashboard", "SETTING"))
         self.helplabel.setText(_translate("dashboard", "HELP"))
         self.feedbacklabel.setText(_translate("dashboard", "FEED BACK"))

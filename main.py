@@ -14,7 +14,7 @@ from setting import Ui_settings
 from notifications import UI_notifications
 from help import UI_help
 from profile import UI_profile
-
+from quarantine import Ui_Quarantine
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -37,6 +37,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.notification=UI_notifications(self)
         self.help=UI_help(self)
         self.profile=UI_profile(self)
+        self.quarantine=Ui_Quarantine(self)
         self.stackedWidget.addWidget(self.dashboard)
         self.stackedWidget.addWidget(self.directoryScan)
         self.stackedWidget.addWidget(self.filescan)
@@ -49,6 +50,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stackedWidget.addWidget(self.notification)
         self.stackedWidget.addWidget(self.help)
         self.stackedWidget.addWidget(self.profile)
+        self.stackedWidget.addWidget(self.quarantine)
         self.setCentralWidget(self.stackedWidget)
         self.showDashboard()
 
@@ -79,6 +81,8 @@ class MainWindow(QtWidgets.QMainWindow):
     def showprofile(self):
         if self.isloggedin: self.stackedWidget.setCurrentWidget(self.profile)
         else: self.stackedWidget.setCurrentWidget(self.login)
+    def showquarantine(self):
+        self.stackedWidget.setCurrentWidget(self.quarantine)
 
 
 class BackgroundLabel(QLabel):
