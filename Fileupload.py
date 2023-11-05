@@ -9,7 +9,7 @@ from my_header import HeaderWidget
 from byteplot import create_byteplot_image
 import joblib
 import cv2
-
+from quarantine import encrypt_and_move_to_quarantine
 
 class Ui_Fileupload(QtWidgets.QWidget):
     def __init__(self,window):
@@ -30,7 +30,6 @@ class Ui_Fileupload(QtWidgets.QWidget):
         if self.selected_file_path:
             from keras.preprocessing import image
             from keras.models import load_model
-            # image_size=(192,192)
             model = load_model('projekt_fyp\\model\\m192_v3.h5')
             img=create_byteplot_image(self.selected_file_path)
             img_array = image.img_to_array(img)
@@ -43,6 +42,7 @@ class Ui_Fileupload(QtWidgets.QWidget):
             for key in sorted(code_to_class.keys()): class_labels.append(code_to_class[key])
             predicted_class = class_labels[predicted_class_index]
             self.label_9.setText(f'Predicted Class: {predicted_class}')
+            if predicted_class!='bengin': encrypt_and_move_to_quarantine(self.selected_file_path)
 
     def go_back(self):
         self.main_window.showDashboard()
@@ -96,11 +96,6 @@ class Ui_Fileupload(QtWidgets.QWidget):
         self.pushButton_7.setStyleSheet("background:black;\n""color:#fff;\n""border:1px solid black;\n""font-weight:bold;\n""font-size:14px;")
         self.pushButton_7.setObjectName("pushButton_7")
         self.pushButton_7.clicked.connect(self.go_back)
-        # self.menubar = QtWidgets.QMenuBar(self)
-        # self.menubar.setGeometry(QtCore.QRect(0, 0, 1096, 22))
-        # self.menubar.setObjectName("menubar")
-        # self.statusbar = QtWidgets.QStatusBar(self)
-        # self.statusbar.setObjectName("statusbar")
         self.retranslateUi(self)
         QtCore.QMetaObject.connectSlotsByName(self)
 

@@ -67,6 +67,10 @@ from datetime import datetime
 import time
 from byteplot import create_byteplot_image
 import numpy as np
+from quarantine import encrypt_and_move_to_quarantine
+
+
+
 class ProgressWorker(QObject):
     progress = pyqtSignal(int, int)
     
@@ -114,7 +118,10 @@ class ProgressWorker(QObject):
                                 class_labels=[]
                                 for key in sorted(code_to_class.keys()): class_labels.append(code_to_class[key])
                                 predicted_class = class_labels[predicted_class_index]
-                                if predicted_class!='benign': self.threats_found+=1
+                                if predicted_class!='benign': 
+                                    self.threats_found+=1
+                                    self.threats_quarantined+=1
+                                    encrypt_and_move_to_quarantine(entry.path)
                         scan_directory(entry.path, files_in_this_folder)
                 except Exception as e:
                     with self.lock:

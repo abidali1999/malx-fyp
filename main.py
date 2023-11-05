@@ -84,7 +84,6 @@ class MainWindow(QtWidgets.QMainWindow):
     def showquarantine(self):
         self.stackedWidget.setCurrentWidget(self.quarantine)
 
-
 class BackgroundLabel(QLabel):
     def __init__(self, background_image_path, parent=None):
         super().__init__(parent)
