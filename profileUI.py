@@ -1,4 +1,3 @@
-import typing
 from PyQt5.QtCore import QRect
 from PyQt5.QtWidgets import QWidget,QLabel,QApplication
 from my_header import HeaderWidget

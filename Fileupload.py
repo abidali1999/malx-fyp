@@ -6,9 +6,7 @@ from MyPushButton import PushButton
 from drag_n_drop import DragnDropLabel
 from qrc import source_rc
 from my_header import HeaderWidget
-from byteplot import create_byteplot_image
-import joblib
-import cv2
+from byteplot_func import create_byteplot_image
 from quarantine import encrypt_and_move_to_quarantine
 
 class Ui_Fileupload(QtWidgets.QWidget):

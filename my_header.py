@@ -1,5 +1,5 @@
 # header_widget.py
-from PyQt5.QtWidgets import QWidget, QLabel, QPushButton, QSlider,QApplication,QFrame
+from PyQt5.QtWidgets import QWidget, QLabel,QApplication,QFrame
 from PyQt5 import QtCore
 from qrc import source_rc
 from MyPushButton import PushButton

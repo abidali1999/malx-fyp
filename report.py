@@ -1,4 +1,4 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 from MyPushButton import PushButton
 from qrc import source_rc
 from my_header import HeaderWidget

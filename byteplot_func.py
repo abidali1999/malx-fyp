@@ -1,6 +1,5 @@
 from PIL import Image
 import numpy as np
-import os
 
 # class Byteplot:  
 def create_byteplot_image(file_path):

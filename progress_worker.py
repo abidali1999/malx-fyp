@@ -1,71 +1,9 @@
-# from PyQt5.QtCore import QObject, pyqtSignal
-# import os
-# import threading
-# from qrc import source_rc
-# import time
-# from datetime import datetime
-
-# class ProgressWorker(QObject):
-#     progress = pyqtSignal(int,QObject)
-
-#     def __init__(self):
-#         super().__init__()
-#         self.lock = threading.Lock()
-
-#     def start_scan(self, directory,progid):
-#         self.progid=progid
-
-#         self.total_files = len(os.listdir(directory))
-#         self.scanned_files = 0
-#         self.threats_found=0
-
-#         def scan_directory(directory, files_in_this_folder):
-#             for entry in os.scandir(directory):
-#                 try: 
-#                     if entry.is_file():
-#                         with self.lock:
-#                             self.scanned_files += 1
-#                             self.scanned_files = min(self.scanned_files, self.total_files)
-#                             progress_percentage = int((self.scanned_files / self.total_files) * 100)
-#                         self.progress.emit(progress_percentage,self.progid)
-#                     elif entry.is_dir():
-#                         files_in_this_folder = len(os.listdir(entry.path))
-#                         with self.lock:
-#                             self.total_files += files_in_this_folder
-#                         scan_directory(entry.path, files_in_this_folder)
-#                 except Exception as e: 
-#                     with self.lock:
-#                         self.total_files -= files_in_this_folder
-#                     print(repr(e))
-#                     pass
-            
-
-#         def start_scan_in_thread():
-#             start=time.time()
-#             scan_directory(directory, self.total_files)
-#             total_time_s=time.time()-start
-#             self.total_time=f'{total_time_s//60}m, {total_time_s%60}s'
-#             date_today=datetime.today().strftime('%Y-%m-%d-%H-%M')
-
-
-#             self.progress.emit(100,progid)  # Asegura que el progreso llegue al 100% al finalizar.
-#             print("Scanning completed. Total files:", self.total_files)
-#             return self.threats_found,self.scanned_files,self.total_time
-            
-
-#         # Crear un hilo para ejecutar la función scan_directory
-#         scan_thread = threading.Thread(target=start_scan_in_thread)
-#         scan_thread.start()
-
-#         print("Scanning started in a separate thread.")
-
-
 from PyQt5.QtCore import QObject, pyqtSignal
 import os
 import threading
 from datetime import datetime
 import time
-from byteplot import create_byteplot_image
+from byteplot_func import create_byteplot_image
 import numpy as np
 from quarantine import encrypt_and_move_to_quarantine
 

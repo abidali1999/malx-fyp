@@ -13,7 +13,7 @@ from report import Ui_scanhistorywindow
 from setting import Ui_settings
 from notifications import UI_notifications
 from help import UI_help
-from profile import UI_profile
+from profileUI import UI_profile
 from quarantine import Ui_Quarantine
 
 class MainWindow(QtWidgets.QMainWindow):

@@ -1,9 +1,7 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QProgressBar, QLabel, QApplication,QPushButton,QMenuBar,QStatusBar
-from PyQt5.QtCore import Qt,QRect,QThread
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QProgressBar, QLabel, QApplication
+from PyQt5.QtCore import QRect
 from PyQt5 import QtCore
-from PyQt5 import QtWidgets
 from MyPushButton import PushButton
-from PyQt5.QtGui import QPixmap
 from qrc import source_rc
 from my_header import HeaderWidget
 class ProgressWindow(QWidget):
