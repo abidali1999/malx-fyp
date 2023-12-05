@@ -40,7 +40,7 @@ class Ui_signupwindow(QtWidgets.QWidget):
             'password': password_hash,
             'phone': phone
         }
-        response = requests.post(api_url, data=data)
+        response = requests.post(api_url, json=data)
         print(response.status_code)
         print(response.text)
         if response.status_code == 201:

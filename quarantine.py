@@ -41,6 +41,7 @@ def encrypt_and_move_to_quarantine(source_path):
     destination_path = os.path.join(QUARANTINE_DIRECTORY, os.path.basename(source_path))
     shutil.move(source_path, destination_path)
     key = Fernet.generate_key()
+    print(len(key))
     cipher_suite = Fernet(key)
     with open(destination_path, 'rb') as f:
         original_data = f.read()
@@ -58,6 +59,7 @@ def delete_quarantined_file(source_path):
     cursor.execute("DELETE FROM quarantine WHERE source_path=?", (source_path,))
     conn.commit()
     conn.close()
+
 
 def decrypt_and_remove_from_quarantine(filepath, destination_path, key,remove=False):
     if not remove: 
@@ -136,7 +138,6 @@ class Ui_Quarantine(QWidget):
         decrypt_and_remove_from_quarantine(source_path, destination_path, key,remove=True)
         delete_quarantined_file(source_path)
         self.update_ui() 
-
         pass
 
 def main():

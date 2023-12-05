@@ -29,6 +29,7 @@ class Ui_loginwindow(QtWidgets.QWidget):
         # self.main_window.showDashboard()
         if response.status_code == 200: 
             self.main_window.isloggedin=True
+            self.main_window.userid=email
             self.main_window.showDashboard()
         else:
             msg = QMessageBox()

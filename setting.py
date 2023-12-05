@@ -10,17 +10,112 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from my_header import HeaderWidget
+import requests
+import hashlib
 
 class Ui_settings(QtWidgets.QWidget):
-    def __init__(self,main_window):
+    def __init__(self,window):
         super().__init__()
-        self.main_window=main_window
+        self.main_window=window
+        self.selected_file_path = None
         self.setupUi()
+
+    def update_account(self):
+        name=self.Emailfield.text().strip()
+        email=self.Emailfield_2.text().strip()
+        password = hashlib.sha256(self.Emailfield_4.text().strip().encode()).hexdigest()
+        phone=self.Emailfield_6.text().strip()
+        url='https://abidali1999063.pythonanywhere.com/update_account'
+        try: oldemail=self.main_window.userid
+        except: oldemail='waseem123@gmail.com'
+        
+        data={'old_email':oldemail,'name':name,'email':email,'password':password,'phone':phone}
+        print(data)
+        r=requests.post(url,json=data)
+        print(r.text)
+        print(r.status_code)
+        if r.status_code==200: 
+             QtWidgets.QMessageBox.information(self, 'Updated', 'Your profile has been updated')
+             self.main_window.userid=email
+        else: QtWidgets.QMessageBox.information(self, 'Try again', f'Something went wrong {r.status_code} {r.text}')
+
+
 
     def setupUi(self):
         self.centralwidget = QtWidgets.QWidget(self)
-        self.centralwidget.setObjectName("centralwidget")
+        # classificationwindow.setObjectName("classificationwindow")
         self.header=HeaderWidget(self.main_window,self.centralwidget)
+
+        self.centralwidget.resize(1096, 916)
+        # self.centralwidget.setStyleSheet("background:white !important;")
+        # self.centralwidget = QtWidgets.QWidget(classificationwindow)
+        # self.centralwidget.setObjectName("centralwidget")
+#         self.label = QtWidgets.QLabel(self.centralwidget)
+#         self.label.setGeometry(QtCore.QRect(0, -10, 151, 121))
+#         self.label.setStyleSheet("image:url(:/newPrefix/images/Malx logo.png);\n"
+# "background-size:cover !important;\n"
+# "background-repeat:no-repeat !important;\n"
+# "text-align:center !important;\n"
+# "margin:0px auto !important;")
+#         self.label.setText("")
+#         self.label.setObjectName("label")
+#         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
+#         self.pushButton.setGeometry(QtCore.QRect(480, 30, 230, 41))
+#         self.pushButton.setStyleSheet("background:black;\n"
+# "color:#fff;\n"
+# "border:1px solid black;\n"
+# "font-weight:bold;\n"
+# "font-size:14px;")
+#         self.pushButton.setObjectName("pushButton")
+#         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
+#         self.pushButton_2.setGeometry(QtCore.QRect(740, 30, 121, 41))
+#         self.pushButton_2.setStyleSheet("background:white;\n"
+# "color:#00000;\n"
+# "border:1px solid black;\n"
+# "font-weight:bold;\n"
+# "font-size:14px;")
+#         self.pushButton_2.setObjectName("pushButton_2")
+#         self.label_2 = QtWidgets.QLabel(self.centralwidget)
+#         self.label_2.setGeometry(QtCore.QRect(860, 0, 101, 91))
+#         self.label_2.setStyleSheet("image:url(:/newPrefix/images/user.png);\n"
+# "background-size:cover !important;\n"
+# "background-repeat:no-repeat !important;\n"
+# "text-align:center !important;\n"
+# "margin:0px auto !important;")
+#         self.label_2.setText("")
+#         self.label_2.setObjectName("label_2")
+#         self.label_3 = QtWidgets.QLabel(self.centralwidget)
+#         self.label_3.setGeometry(QtCore.QRect(910, 0, 101, 91))
+#         self.label_3.setStyleSheet("image:url(:/newPrefix/images/bell.png);\n"
+# "background-size:cover !important;\n"
+# "background-repeat:no-repeat !important;\n"
+# "text-align:center !important;\n"
+# "margin:0px auto !important;")
+#         self.label_3.setText("")
+#         self.label_3.setObjectName("label_3")
+#         self.label_4 = QtWidgets.QLabel(self.centralwidget)
+#         self.label_4.setGeometry(QtCore.QRect(960, 0, 101, 91))
+#         self.label_4.setStyleSheet("image:url(:/newPrefix/images/settings.png);\n"
+# "background-size:cover !important;\n"
+# "background-repeat:no-repeat !important;\n"
+# "text-align:center !important;\n"
+# "margin:0px auto !important;")
+#         self.label_4.setText("")
+#         self.label_4.setObjectName("label_4")
+#         self.label_5 = QtWidgets.QLabel(self.centralwidget)
+#         self.label_5.setGeometry(QtCore.QRect(1010, 0, 101, 91))
+#         self.label_5.setStyleSheet("image:url(:/newPrefix/images/question.png);\n"
+# "background-size:cover !important;\n"
+# "background-repeat:no-repeat !important;\n"
+# "text-align:center !important;\n"
+# "margin:0px auto !important;")
+#         self.label_5.setText("")
+#         self.label_5.setObjectName("label_5")
+#         self.horizontalSlider = QtWidgets.QSlider(self.centralwidget)
+#         self.horizontalSlider.setGeometry(QtCore.QRect(-10, 90, 1111, 20))
+#         self.horizontalSlider.setStyleSheet("color:rgb(0, 0, 0);")
+#         self.horizontalSlider.setOrientation(QtCore.Qt.Horizontal)
+#         self.horizontalSlider.setObjectName("horizontalSlider")
         self.label_7 = QtWidgets.QLabel(self.centralwidget)
         self.label_7.setGeometry(QtCore.QRect(20, 130, 201, 51))
         self.label_7.setStyleSheet("font-size:20px;\n"
@@ -31,7 +126,7 @@ class Ui_settings(QtWidgets.QWidget):
 "")
         self.label_7.setObjectName("label_7")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
-        self.tabWidget.setGeometry(QtCore.QRect(60, 190, 1001, 721))
+        self.tabWidget.setGeometry(QtCore.QRect(150, 170, 1001, 721))
         self.tabWidget.setObjectName("tabWidget")
         self.General_3 = QtWidgets.QWidget()
         self.General_3.setObjectName("General_3")
@@ -389,107 +484,61 @@ class Ui_settings(QtWidgets.QWidget):
         self.tabWidget.addTab(self.Security_3, "")
         self.Account_3 = QtWidgets.QWidget()
         self.Account_3.setObjectName("Account_3")
-        self.label_44 = QtWidgets.QLabel(self.Account_3)
-        self.label_44.setGeometry(QtCore.QRect(790, 160, 291, 51))
-        self.label_44.setStyleSheet("font-size:15px;\n"
-"line-height:40px;\n"
-"margin:0px auto;\n"
-"text-align:center;\n"
-"")
-        self.label_44.setObjectName("label_44")
-        self.label_45 = QtWidgets.QLabel(self.Account_3)
-        self.label_45.setGeometry(QtCore.QRect(0, 160, 291, 51))
-        self.label_45.setStyleSheet("font-size:15px;\n"
-"line-height:40px;\n"
-"margin:0px auto;\n"
-"text-align:center;\n"
-"")
-        self.label_45.setObjectName("label_45")
-        self.label_46 = QtWidgets.QLabel(self.Account_3)
-        self.label_46.setGeometry(QtCore.QRect(250, 100, 251, 51))
-        self.label_46.setStyleSheet("font-size:15px;\n"
+        self.widget = QtWidgets.QWidget(self.Account_3)
+        self.widget.setGeometry(QtCore.QRect(230, 80, 521, 471))
+        self.widget.setStyleSheet("border:1px solid #0000;")
+        self.widget.setObjectName("widget")
+        self.Emailfield_4 = QtWidgets.QLineEdit(self.widget)
+        self.Emailfield_4.setGeometry(QtCore.QRect(120, 230, 291, 41))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.Emailfield_4.setFont(font)
+        self.Emailfield_4.setStyleSheet("border:1px solid black;\n"
+"padding:10px")
+        self.Emailfield_4.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.Emailfield_4.setObjectName("Emailfield_4")
+        self.label_8 = QtWidgets.QLabel(self.widget)
+        self.label_8.setGeometry(QtCore.QRect(100, 40, 341, 51))
+        self.label_8.setStyleSheet("font-size:20px;\n"
 "font-weight:bold;\n"
 "line-height:40px;\n"
 "margin:0px auto;\n"
 "text-align:center;\n"
 "")
-        self.label_46.setObjectName("label_46")
-        self.label_47 = QtWidgets.QLabel(self.Account_3)
-        self.label_47.setGeometry(QtCore.QRect(660, 210, 171, 51))
-        self.label_47.setStyleSheet("font-size:10px;\n"
-"line-height:40px;\n"
-"margin:0px auto;\n"
-"text-align:center;\n"
-"")
-        self.label_47.setObjectName("label_47")
-        self.label_48 = QtWidgets.QLabel(self.Account_3)
-        self.label_48.setGeometry(QtCore.QRect(0, 100, 251, 51))
-        self.label_48.setStyleSheet("font-size:15px;\n"
+        self.label_8.setObjectName("label_8")
+        self.Emailfield_2 = QtWidgets.QLineEdit(self.widget)
+        self.Emailfield_2.setGeometry(QtCore.QRect(120, 170, 291, 41))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.Emailfield_2.setFont(font)
+        self.Emailfield_2.setStyleSheet("border:1px solid black;\n"
+"padding:10px;")
+        self.Emailfield_2.setObjectName("Emailfield_2")
+        self.Emailfield_6 = QtWidgets.QLineEdit(self.widget)
+        self.Emailfield_6.setGeometry(QtCore.QRect(120, 290, 291, 41))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.Emailfield_6.setFont(font)
+        self.Emailfield_6.setStyleSheet("border:1px solid black;\n"
+"padding:10px;")
+        self.Emailfield_6.setObjectName("Emailfield_6")
+        self.backtologinbtn = QtWidgets.QPushButton(self.widget)
+        self.backtologinbtn.setGeometry(QtCore.QRect(120, 350, 291, 40))
+        self.backtologinbtn.setStyleSheet("background:black;\n"
+"color:#fff;\n"
+"border:1px solid black;\n"
 "font-weight:bold;\n"
-"line-height:40px;\n"
-"margin:0px auto;\n"
-"text-align:center;\n"
-"")
-        self.label_48.setObjectName("label_48")
-        self.label_49 = QtWidgets.QLabel(self.Account_3)
-        self.label_49.setGeometry(QtCore.QRect(510, 100, 251, 51))
-        self.label_49.setStyleSheet("font-size:15px;\n"
-"font-weight:bold;\n"
-"line-height:40px;\n"
-"margin:0px auto;\n"
-"text-align:center;\n"
-"")
-        self.label_49.setObjectName("label_49")
-        self.label_50 = QtWidgets.QLabel(self.Account_3)
-        self.label_50.setGeometry(QtCore.QRect(790, 210, 291, 51))
-        self.label_50.setStyleSheet("font-size:15px;\n"
-"line-height:40px;\n"
-"margin:0px auto;\n"
-"text-align:center;\n"
-"")
-        self.label_50.setObjectName("label_50")
-        self.label_51 = QtWidgets.QLabel(self.Account_3)
-        self.label_51.setGeometry(QtCore.QRect(250, 160, 291, 51))
-        self.label_51.setStyleSheet("font-size:15px;\n"
-"line-height:40px;\n"
-"margin:0px auto;\n"
-"text-align:center;\n"
-"")
-        self.label_51.setObjectName("label_51")
-        self.label_52 = QtWidgets.QLabel(self.Account_3)
-        self.label_52.setGeometry(QtCore.QRect(790, 100, 251, 51))
-        self.label_52.setStyleSheet("font-size:15px;\n"
-"font-weight:bold;\n"
-"line-height:40px;\n"
-"margin:0px auto;\n"
-"text-align:center;\n"
-"")
-        self.label_52.setObjectName("label_52")
-        self.label_53 = QtWidgets.QLabel(self.Account_3)
-        self.label_53.setGeometry(QtCore.QRect(510, 160, 291, 51))
-        self.label_53.setStyleSheet("font-size:15px;\n"
-"line-height:40px;\n"
-"margin:0px auto;\n"
-"text-align:center;\n"
-"")
-        self.label_53.setObjectName("label_53")
-        self.label_54 = QtWidgets.QLabel(self.Account_3)
-        self.label_54.setGeometry(QtCore.QRect(0, 30, 481, 51))
-        self.label_54.setStyleSheet("font-size:15px;\n"
-"font-weight:bold;\n"
-"line-height:40px;\n"
-"margin:0px auto;\n"
-"text-align:center;\n"
-"")
-        self.label_54.setObjectName("label_54")
-        self.label_55 = QtWidgets.QLabel(self.Account_3)
-        self.label_55.setGeometry(QtCore.QRect(510, 210, 171, 51))
-        self.label_55.setStyleSheet("font-size:10px;\n"
-"line-height:40px;\n"
-"margin:0px auto;\n"
-"text-align:center;\n"
-"")
-        self.label_55.setObjectName("label_55")
+"font-size:14px;")
+        self.backtologinbtn.setObjectName("backtologinbtn")
+        self.backtologinbtn.clicked.connect(self.update_account)
+        self.Emailfield = QtWidgets.QLineEdit(self.widget)
+        self.Emailfield.setGeometry(QtCore.QRect(120, 110, 291, 41))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.Emailfield.setFont(font)
+        self.Emailfield.setStyleSheet("border:1px solid black;\n"
+"padding:10px;")
+        self.Emailfield.setObjectName("Emailfield")
         self.tabWidget.addTab(self.Account_3, "")
         self.About_3 = QtWidgets.QWidget()
         self.About_3.setObjectName("About_3")
@@ -579,14 +628,15 @@ class Ui_settings(QtWidgets.QWidget):
         # self.statusbar.setObjectName("statusbar")
         # self.setStatusBar(self.statusbar)
 
-        self.retranslateUi()
-        self.tabWidget.setCurrentIndex(0)
+        self.retranslateUi(self)
+        self.tabWidget.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(self)
 
-    def retranslateUi(self):
+    def retranslateUi(self, classificationwindow):
         _translate = QtCore.QCoreApplication.translate
-        # self.setWindowTitle(_translate("classificationwindow", "MainWindow"))
-
+        self.setWindowTitle(_translate("classificationwindow", "MainWindow"))
+        # self.pushButton.setText(_translate("classificationwindow", "ACTIVATE SUBSCRIPTION"))
+        # self.pushButton_2.setText(_translate("classificationwindow", "BUY NOW"))
         self.label_7.setText(_translate("classificationwindow", "SETTING"))
         self.label_14.setText(_translate("classificationwindow", "Application Updates"))
         self.label_15.setText(_translate("classificationwindow", "Automatically download and start Updates"))
@@ -635,18 +685,12 @@ class Ui_settings(QtWidgets.QWidget):
         self.label_42.setText(_translate("classificationwindow", "Windows Security Centers"))
         self.label_43.setText(_translate("classificationwindow", "Always register malx in the windows security centers"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.Security_3), _translate("classificationwindow", "Security"))
-        self.label_44.setText(_translate("classificationwindow", "12 Days Remaining"))
-        self.label_45.setText(_translate("classificationwindow", "DESKTOP-ETM9N5I"))
-        self.label_46.setText(_translate("classificationwindow", "EDIITION"))
-        self.label_47.setText(_translate("classificationwindow", "Deactivate"))
-        self.label_48.setText(_translate("classificationwindow", "DEVICE NAME"))
-        self.label_49.setText(_translate("classificationwindow", "LICENSE KEY"))
-        self.label_50.setText(_translate("classificationwindow", "BUY NOW"))
-        self.label_51.setText(_translate("classificationwindow", "14-DAY PREMIUM TRAILS"))
-        self.label_52.setText(_translate("classificationwindow", "STATUS"))
-        self.label_53.setText(_translate("classificationwindow", "-"))
-        self.label_54.setText(_translate("classificationwindow", "ACCOUNT DETAILS"))
-        self.label_55.setText(_translate("classificationwindow", "Activate Subscription"))
+        self.Emailfield_4.setPlaceholderText(_translate("classificationwindow", "Password"))
+        self.label_8.setText(_translate("classificationwindow", "Update Your Account info"))
+        self.Emailfield_2.setPlaceholderText(_translate("classificationwindow", "Enter Email"))
+        self.Emailfield_6.setPlaceholderText(_translate("classificationwindow", "Phone"))
+        self.backtologinbtn.setText(_translate("classificationwindow", "UPDATE"))
+        self.Emailfield.setPlaceholderText(_translate("classificationwindow", "Enter Name"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.Account_3), _translate("classificationwindow", "Account"))
         self.label_56.setText(_translate("classificationwindow", "1.0.2613"))
         self.label_57.setText(_translate("classificationwindow", "4.6.4.286"))
@@ -664,8 +708,9 @@ from qrc import source_rc
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    classificationwindow = QtWidgets.QMainWindow()
-    ui = Ui_settings(classificationwindow)
+#     classificationwindow = QtWidgets.QMainWindow()
+    ui = Ui_settings(app)
+#     classificationwindow.resize(1100,900)
 #     ui.setupUi(classificationwindow)
-    classificationwindow.show()
+    ui.show()
     sys.exit(app.exec_())

@@ -10,7 +10,6 @@ class Dashboard(QtWidgets.QWidget):
         print(main_window)
         super().__init__()
         self.setupUi()
-        
     
     def opendirectory(self):
         self.main_window.showDirectoryScan()
@@ -30,10 +29,18 @@ class Dashboard(QtWidgets.QWidget):
     def openquarantine(self):
         self.main_window.showquarantine()
 
+    def opensetting(self):
+        self.main_window.showsetting()
+
+    def openhelp(self):
+        self.main_window.showhelp()
+
+    def openfeedback(self):
+        self.main_window.showfeedback()
 
     def setupUi(self):
         self.centralwidget = QtWidgets.QWidget(self)
-        self.centralwidget.resize(1096, 900)
+        self.centralwidget.setFixedSize(1100, 900)
         self.centralwidget.setObjectName("centralwidget")
         self.header=HeaderWidget(self.main_window,self.centralwidget)
         self.label_6 = QtWidgets.QLabel(self.centralwidget)
@@ -120,48 +127,50 @@ class Dashboard(QtWidgets.QWidget):
         self.visualizationimg.setObjectName("visualizationimg")
         self.qurantinebtn.clicked.connect(self.openquarantine)
 
-        self.settingbtn = QtWidgets.QPushButton(self.centralwidget)
+        self.settingbtn = PushButton(self.centralwidget,True)
         self.settingbtn.setGeometry(QtCore.QRect(350, 540, 181, 191))
-        self.settingbtn.setStyleSheet("border:1px solid black;")
-        self.settingbtn.setText("")
         self.settingbtn.setObjectName("settingbtn")
-        self.settinglabel = QtWidgets.QLabel(self.centralwidget)
-        self.settinglabel.setGeometry(QtCore.QRect(410, 650, 71, 61))
-        self.settinglabel.setStyleSheet("font-size:14px;\n""font-weight:bold;\n""line-height:40px;\n""text-align:center\n""")
+        self.settinglabel = QtWidgets.QLabel(self.settingbtn)
+        self.settinglabel.setGeometry(QtCore.QRect(30, 115, 131, 61))
+        self.settinglabel.setStyleSheet("font-size:14px;\n""font-weight:bold;\n""line-height:40px;\n")
         self.settinglabel.setObjectName("settinglabel")
-        self.settingimg = QtWidgets.QLabel(self.centralwidget)
-        self.settingimg.setGeometry(QtCore.QRect(380, 570, 121, 91))
+        self.settingimg = QtWidgets.QLabel(self.settingbtn)
+        self.settingimg.setGeometry(QtCore.QRect(30, 25, 121, 91))
         self.settingimg.setStyleSheet("image:url(:/newPrefix/images/settings.png);\n""background-repeat:no-repeat !important;\n""text-align:center !important;\n""margin:0px auto !important;")
-        self.settingimg.setText("")
+        self.settinglabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.settingimg.setObjectName("settingimg")
-        self.helpbtn = QtWidgets.QPushButton(self.centralwidget,clicked = lambda:self.openHelp())
+        self.settingbtn.clicked.connect(self.opensetting)
+
+
+        self.helpbtn = PushButton(self.centralwidget,True)
         self.helpbtn.setGeometry(QtCore.QRect(580, 540, 181, 191))
-        self.helpbtn.setStyleSheet("border:1px solid black;")
-        self.helpbtn.setText("")
         self.helpbtn.setObjectName("helpbtn")
-        self.helpimg = QtWidgets.QLabel(self.centralwidget)
-        self.helpimg.setGeometry(QtCore.QRect(610, 570, 121, 91))
+        self.helpimg = QtWidgets.QLabel(self.helpbtn)
+        self.helpimg.setGeometry(QtCore.QRect(30, 25, 121, 91))
         self.helpimg.setStyleSheet("image:url(:/newPrefix/images/question.png);\n""background-repeat:no-repeat !important;\n""text-align:center !important;\n""margin:0px auto !important;")
-        self.helpimg.setText("")
         self.helpimg.setObjectName("helpimg")
-        self.helplabel = QtWidgets.QLabel(self.centralwidget)
-        self.helplabel.setGeometry(QtCore.QRect(650, 650, 71, 61))
+        self.helplabel = QtWidgets.QLabel(self.helpbtn)
+        self.helplabel.setGeometry(QtCore.QRect(30, 115, 131, 61))
         self.helplabel.setStyleSheet("font-size:14px;\n""font-weight:bold;\n""line-height:40px;\n""text-align:center\n""")
         self.helplabel.setObjectName("helplabel")
-        self.feedbackbtn = QtWidgets.QPushButton(self.centralwidget, clicked = lambda:self.openfeedback())
+        self.helplabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.helpbtn.clicked.connect(self.openhelp)
+
+
+
+        self.feedbackbtn = PushButton(self.centralwidget,True)
         self.feedbackbtn.setGeometry(QtCore.QRect(810, 540, 181, 191))
-        self.feedbackbtn.setStyleSheet("border:1px solid black;")
-        self.feedbackbtn.setText("")
         self.feedbackbtn.setObjectName("feedbackbtn")
-        self.feedbackimg = QtWidgets.QLabel(self.centralwidget)
-        self.feedbackimg.setGeometry(QtCore.QRect(840, 570, 121, 91))
+        self.feedbackimg = QtWidgets.QLabel(self.feedbackbtn)
+        self.feedbackimg.setGeometry(QtCore.QRect(30, 25, 121, 91))
         self.feedbackimg.setStyleSheet("image:url(:/newPrefix/images/feedback.png);\n""background-repeat:no-repeat !important;\n""text-align:center !important;\n""margin:0px auto !important;")
-        self.feedbackimg.setText("")
         self.feedbackimg.setObjectName("feedbackimg")
-        self.feedbacklabel = QtWidgets.QLabel(self.centralwidget)
-        self.feedbacklabel.setGeometry(QtCore.QRect(870, 650, 81, 61))
+        self.feedbacklabel = QtWidgets.QLabel(self.feedbackbtn)
+        self.feedbacklabel.setGeometry(QtCore.QRect(30, 115, 131, 61))
         self.feedbacklabel.setStyleSheet("font-size:14px;\n""font-weight:bold;\n""line-height:40px;\n""text-align:center\n""")
         self.feedbacklabel.setObjectName("feedbacklabel")
+        self.feedbacklabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.feedbackbtn.clicked.connect(self.openfeedback)
         # self.menubar = QtWidgets.QMenuBar(self)
         # self.menubar.setGeometry(QtCore.QRect(0, 0, 1096, 22))
         # self.menubar.setObjectName("menubar")
@@ -191,6 +200,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     window = Dashboard(app)
+    window.setFixedSize(1100,900)
     window.show()
     sys.exit(app.exec_())
 

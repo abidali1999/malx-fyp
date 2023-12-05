@@ -48,3 +48,9 @@ def create_byteplot_image(file_path):
 #     return image
 
 
+# d=create_byteplot_image('projekt_fyp\malxV2\\byteplot_func.py')
+# byte_matrix = np.expand_dims(d, axis=0)
+# byte_matrix = byte_matrix / 255.0  
+# print(type(d))
+# print(type(byte_matrix))
+

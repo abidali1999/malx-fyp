@@ -12,16 +12,20 @@ from scan import UI_scans
 from report import Ui_scanhistorywindow
 from setting import Ui_settings
 from notifications import UI_notifications
-from help import UI_help
+from help import Ui_Helpwindow
 from profileUI import UI_profile
 from quarantine import Ui_Quarantine
+from feedback import Ui_Feedbackwindow
+
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.initUI()
-        self.isloggedin=False
+        
+        
     def initUI(self):
+        self.isloggedin=False
         self.userid='boota@gmail.com'
         self.resize(1096, 841)
         self.stackedWidget = QtWidgets.QStackedWidget()
@@ -35,9 +39,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.report=Ui_scanhistorywindow(self)
         self.setting=Ui_settings(self)
         self.notification=UI_notifications(self)
-        self.help=UI_help(self)
+        self.help=Ui_Helpwindow(self)
         self.profile=UI_profile(self)
         self.quarantine=Ui_Quarantine(self)
+        self.feedback=Ui_Feedbackwindow(self)
         self.stackedWidget.addWidget(self.dashboard)
         self.stackedWidget.addWidget(self.directoryScan)
         self.stackedWidget.addWidget(self.filescan)
@@ -51,8 +56,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stackedWidget.addWidget(self.help)
         self.stackedWidget.addWidget(self.profile)
         self.stackedWidget.addWidget(self.quarantine)
+        self.stackedWidget.addWidget(self.feedback)
         self.setCentralWidget(self.stackedWidget)
-        self.showDashboard()
+        self.showlogin()
 
     def showDashboard(self):
         self.stackedWidget.setCurrentWidget(self.dashboard)
@@ -78,6 +84,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stackedWidget.setCurrentWidget(self.notification)
     def showhelp(self):
         self.stackedWidget.setCurrentWidget(self.help)
+    def showfeedback(self):
+        self.stackedWidget.setCurrentWidget(self.feedback)
     def showprofile(self):
         if self.isloggedin: self.stackedWidget.setCurrentWidget(self.profile)
         else: self.stackedWidget.setCurrentWidget(self.login)
@@ -101,5 +109,6 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
+    window.setFixedSize(1100,900)
     window.show()
     sys.exit(app.exec_())

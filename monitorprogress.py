@@ -27,13 +27,17 @@ class ProgressWindow(QWidget):
 
         # Set a fixed stretch factor to control the spacing
         self.body_layout.addWidget(label)
+        print('appending: ',progress_bar)
 
         self.progress_bars.append(progress_bar)  # Add the progress bar to the list
         return progress_bar  # Return the progress bar for further updates
 
     def set_progress(self, value, progress_bar):
+        print('to update: ', progress_bar)
         if progress_bar in self.progress_bars:
             progress_bar.setValue(value)
+            print('setting value: ',value)
+        else: print('not found')
 
     def setup_UI(self):
         self.centralwidget = QWidget(self)
@@ -57,8 +61,6 @@ class ProgressWindow(QWidget):
         self.pushButton_5.setObjectName("pushButton_5")
         self.pushButton_5.clicked.connect(self.open_dashboard)
 
-        
- 
         self.retranslateUi(self)
         QtCore.QMetaObject.connectSlotsByName(self)
 
@@ -76,12 +78,12 @@ if __name__ == "__main__":
     window = ProgressWindow(app)
     
     # Add progress bars and get their references
-    # progress_bar1 = window.add_progress_bar('C://')
-    # progress_bar2 = window.add_progress_bar('D://')
-    # # progress_bar3 = window.add_progress_bar('E://')
+    # progress_bar1 = window.add_progress_bar('C:\\Users\\user\Desktop\\test')
+    # progress_bar2 = window.add_progress_bar('D:\digicartapp\digicart')
+    # progress_bar3 = window.add_progress_bar('E://')
     # # Set values for progress bars
-    # window.set_progress(30, progress_bar1)
+    # window.set_progress(60, progress_bar1)
     # window.set_progress(50, progress_bar2)
-    # window.set_progress(70, progress_bar3)
+    # window.set_progress(10, progress_bar3)
     window.show()
     sys.exit(app.exec_())
