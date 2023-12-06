@@ -27,17 +27,17 @@ class ProgressWindow(QWidget):
 
         # Set a fixed stretch factor to control the spacing
         self.body_layout.addWidget(label)
-        print('appending: ',progress_bar)
+        # print('appending: ',progress_bar)
 
         self.progress_bars.append(progress_bar)  # Add the progress bar to the list
         return progress_bar  # Return the progress bar for further updates
 
     def set_progress(self, value, progress_bar):
-        print('to update: ', progress_bar)
+        # print('to update: ', progress_bar)
         if progress_bar in self.progress_bars:
             progress_bar.setValue(value)
-            print('setting value: ',value)
-        else: print('not found')
+            # print('setting value: ',value)
+        # else: print('not found')
 
     def setup_UI(self):
         self.centralwidget = QWidget(self)

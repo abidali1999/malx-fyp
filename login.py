@@ -3,7 +3,8 @@ from PyQt5.QtWidgets import QLabel, QWidget, QPushButton, QLineEdit,QMessageBox,
 from PyQt5.QtGui import QFont
 from qrc import source_rc
 import requests
-from my_header import HeaderWidget
+# from my_header import HeaderWidget
+from MyPushButton import PushButton
 
 
 class Ui_loginwindow(QtWidgets.QWidget):
@@ -41,9 +42,9 @@ class Ui_loginwindow(QtWidgets.QWidget):
     def setupUi(self):
         self.centralwidget = QWidget(self)
         self.resize(1096, 900)
-        self.header=HeaderWidget(self.main_window,self.centralwidget)
-        self.pushButton_2 = QPushButton(self.centralwidget)
-        self.pushButton_2.setGeometry(440, 400, 121, 41)
+        # self.header=HeaderWidget(self.main_window,self.centralwidget)
+        self.pushButton_2 = PushButton(self.centralwidget,True,1)
+        self.pushButton_2.setGeometry(590, 500, 121, 41)
         self.pushButton_2.setStyleSheet("background-color: white;\n""color: black;\n""border: 1px solid black;\n""font-weight: bold;\n""font-size: 14px;")
         self.pushButton_2.setObjectName("pushButton_2")
         self.pushButton_2.clicked.connect(self.opensignup)
@@ -52,8 +53,14 @@ class Ui_loginwindow(QtWidgets.QWidget):
         # self.label.setStyleSheet("image:url(:/newPrefix/images/Malx logo.png);\n""text-align:center;\n""margin:0px auto;")
         # self.label.setText("")
         # self.label.setObjectName("label")
+
+        self.logoimg = QLabel(self.centralwidget)
+        self.logoimg.setGeometry(QtCore.QRect(450, 150, 200, 150))
+        self.logoimg.setStyleSheet("image:url(:/newPrefix/images/Malx logo.png);\n""background-repeat:no-repeat !important;\n""text-align:center !important;\n""margin:0px auto !important;")
+        self.logoimg.setObjectName("Directoryimg")
+
         self.Emailfield_2 = QLineEdit(self.centralwidget)
-        self.Emailfield_2.setGeometry(240, 320, 321, 41)
+        self.Emailfield_2.setGeometry(390, 420, 321, 41)
         font = QFont()
         font.setPointSize(11)
         self.Emailfield_2.setFont(font)
@@ -61,16 +68,16 @@ class Ui_loginwindow(QtWidgets.QWidget):
         self.Emailfield_2.setEchoMode(QLineEdit.Password)
         self.Emailfield_2.setObjectName("Emailfield_2")
         self.Emailfield = QLineEdit(self.centralwidget)
-        self.Emailfield.setGeometry(240, 240, 321, 41)
+        self.Emailfield.setGeometry(390, 340, 321, 41)
         self.Emailfield.setFont(font)
         self.Emailfield.setStyleSheet("border: 1px solid black;")
         self.Emailfield.setObjectName("Emailfield")
         self.label_2 = QLabel(self.centralwidget)
-        self.label_2.setGeometry(240, 450, 121, 21)
+        self.label_2.setGeometry(390, 550, 121, 21)
         self.label_2.setStyleSheet("font-size: 15px;")
         self.label_2.setObjectName("label_2")
-        self.loginbtn = QPushButton(self.centralwidget)
-        self.loginbtn.setGeometry(240, 400, 121, 41)
+        self.loginbtn = PushButton(self.centralwidget,True,1)
+        self.loginbtn.setGeometry(390, 500, 121, 41)
         self.loginbtn.setStyleSheet("background-color: black;\n""color: white;\n""border: 1px solid black;\n""font-weight: bold;\n""font-size: 14px;")
         self.loginbtn.setObjectName("loginbtn")
         self.loginbtn.clicked.connect(self.openwindow)

@@ -15,7 +15,7 @@ class Ui_scanhistorywindow(QtWidgets.QWidget):
 
     def update_screen(self,report_id):
         import requests
-        api_url = 'https://abidali1999063.pythonanywhere.com/data_api'  # Replace with your actual API URL
+        api_url = 'https://abidali1999063.pythonanywhere.com/data_api'  
         data = {
             'id': report_id,
             'qtype': 'report'

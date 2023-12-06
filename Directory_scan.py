@@ -135,7 +135,7 @@ class DirectoryScan(QtWidgets.QWidget):
         print(self.selected_directory)
         if self.selected_directory:
             prog=self.main_window.progress_window.add_progress_bar(self.selected_directory)
-            print('as returned: ', prog)
+            # print('as returned: ', prog)
             self.active_scans.append(prog)
             if not self.scanning: self.toggle_scan()  
             self.progress_worker.start_scan(self.selected_directory,prog,self.make_scan_entry)

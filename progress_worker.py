@@ -54,7 +54,7 @@ class ProgressWorker(QObject):
                                     self.threats_quarantined+=1
                                     encrypt_and_move_to_quarantine(entry.path)
                             progress_percentage = int((self.scanned_files / self.total_files) * 100)
-                        print('going for: ',self.progid)
+                        # print('going for: ',self.progid)
                         self.progress.emit(progress_percentage, self.progid)
                     elif entry.is_dir():
                         files_in_this_folder = len(os.listdir(entry.path))

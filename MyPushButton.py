@@ -2,8 +2,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class PushButton(QtWidgets.QPushButton):
-    def __init__(self, parent=None,enable_border=False):
-        self.border='2px solid black' if enable_border else 'none'
+    def __init__(self, parent=None,enable_border=False,border_value=2):
+        self.border=f'{border_value}px solid black' if enable_border else 'none'
         super().__init__(parent)
         self._animation = QtCore.QVariantAnimation(
             startValue=QtGui.QColor("#4CAF50"),

@@ -26,7 +26,7 @@ class MainWindow(QtWidgets.QMainWindow):
         
     def initUI(self):
         self.isloggedin=False
-        self.userid='boota@gmail.com'
+        self.userid=''
         self.resize(1096, 841)
         self.stackedWidget = QtWidgets.QStackedWidget()
         self.dashboard = Dashboard(self)

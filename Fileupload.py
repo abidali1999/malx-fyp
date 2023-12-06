@@ -8,13 +8,15 @@ from qrc import source_rc
 from my_header import HeaderWidget
 from byteplot_func import create_byteplot_image
 from quarantine import encrypt_and_move_to_quarantine
-
+from keras.preprocessing import image
+from keras.models import load_model
 class Ui_Fileupload(QtWidgets.QWidget):
     def __init__(self,window):
         super().__init__()
         self.main_window=window
         self.selected_file_path = None
         self.setupUi()
+        
         
     def select_file(self):
         options = QFileDialog.Options()
@@ -26,8 +28,7 @@ class Ui_Fileupload(QtWidgets.QWidget):
         
     def scan(self):
         if self.selected_file_path:
-            from keras.preprocessing import image
-            from keras.models import load_model
+            
             model = load_model('projekt_fyp\\model\\m192_v3.h5')
             img=create_byteplot_image(self.selected_file_path)
             img_array = image.img_to_array(img)
@@ -40,7 +41,7 @@ class Ui_Fileupload(QtWidgets.QWidget):
             for key in sorted(code_to_class.keys()): class_labels.append(code_to_class[key])
             predicted_class = class_labels[predicted_class_index]
             self.label_9.setText(f'Predicted Class: {predicted_class}')
-            if predicted_class!='bengin': encrypt_and_move_to_quarantine(self.selected_file_path)
+            if predicted_class!='benign': encrypt_and_move_to_quarantine(self.selected_file_path)
 
     def go_back(self):
         self.main_window.showDashboard()

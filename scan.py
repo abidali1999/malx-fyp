@@ -89,10 +89,14 @@ class UI_scans(QMainWindow):
 
 
     def load_data(self):
+        print('loading data')
         api_url = 'https://abidali1999063.pythonanywhere.com/data_api'  # Replace with your actual API URL
         data = {
-            'userid': self.main_window.userid,
+            'userid': 'abidali@gmail.com',
+
+            # 'userid': self.main_window.userid,
             'qtype': 'scan'
+
         }
         response = requests.get(api_url, params=data).json()
         print(response,type(response))
