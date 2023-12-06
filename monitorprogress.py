@@ -9,7 +9,6 @@ class ProgressWindow(QWidget):
     def open_dashboard(self):
         self.main_window.showDashboard()
 
-
     def __init__(self,main_window):
         super().__init__()
         self.main_window=main_window

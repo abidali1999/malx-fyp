@@ -7,8 +7,8 @@ def is_valid_email(email):
     return re.match(pattern, email)
 
 def send_verification_email(email):
-    sender_email = '21022@students.riphah.edu.pk'
-    sender_password = 'Thenigma'
+    sender_email = ''
+    sender_password = ''
     verification_code = '123456'  # Generate this securely in a real application
     msg = EmailMessage()
     msg.set_content(f'Your verification code is: {verification_code}')

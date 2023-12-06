@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QMessageBox,QApplication,QInputDialog
 from qrc import source_rc
 import requests
 from MyPushButton import PushButton
-
+import re
 
 class Ui_signupwindow(QtWidgets.QWidget):
     def __init__(self,parent):
@@ -22,26 +22,32 @@ class Ui_signupwindow(QtWidgets.QWidget):
         self.main_window.showlogin()
 
     def show_confirmation_dialog(self,useremail):
-        code, ok_pressed = QInputDialog.getText(self, "Enter Confirmation Code", "Verification Code:")
-        if ok_pressed:
-            print(f"Entered Code: {code}")
-            # try: email=self.main_window.userid
-            # except: email='abidali1999063@gmail.com'
-            
-            api_url = 'https://abidali1999063.pythonanywhere.com/verify_email'  # Replace with your actual API URL
-            data = {
-                'code': code,
-                'email': useremail,
-            }
-            response = requests.post(api_url, json=data)
-            print(response.status_code)
-            print(response.text)
-            try: 
-                if response.json()['status']=='success':
-                    self.main_window.showDashboard()
-            except: pass
+        while True:
+            code, ok_pressed = QInputDialog.getText(self, "Enter Confirmation Code", "Verification Code:")
+            if ok_pressed:
+                print(f"Entered Code: {code}")
+                # try: email=self.main_window.userid
+                # except: email='abidali1999063@gmail.com'
+                
+                api_url = 'https://abidali1999063.pythonanywhere.com/verify_email'  # Replace with your actual API URL
+                data = {
+                    'code': code,
+                    'email': useremail,
+                }
+                response = requests.post(api_url, json=data)
+                print(response.status_code)
+                print(response.text)
+                try: 
+                    if response.json()['status']=='success':
+                        self.main_window.showDashboard()
+                        break
+                except: pass
+            else: break
 
     def signup(self):
+        # import json
+
+        # json.dump()
         first_name = self.Emailfield.text()
         email = self.Emailfield_2.text()
         last_name = self.Emailfield_3.text()
@@ -49,6 +55,12 @@ class Ui_signupwindow(QtWidgets.QWidget):
         confirm_password = self.Emailfield_5.text()
         phone = self.Emailfield_6.text()
         name=first_name+' '+last_name
+        if not self.is_valid_email(email): 
+            self.show_message("Invalid Email", "Please enter a valid email")
+            return
+        if len(password)<8: 
+            self.show_message("Weak Password", "Password must be atleast 8 characters long")
+            return
         if password != confirm_password:
             self.show_message("Password mismatch", "Passwords do not match.")
             return
@@ -73,9 +85,16 @@ class Ui_signupwindow(QtWidgets.QWidget):
             #     'phone': phone
             # }
             # response = requests.post(api_url, json=data)
+            self.pushButton_2.setEnabled(False)
             self.show_confirmation_dialog(email)
+            self.pushButton_2.setEnabled(True)
             # self.main_window.showlogin()
         else: self.show_message("Sign Up Error", response.text)
+
+    def is_valid_email(self,email):
+        pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+        return re.match(pattern, email) is not None
+
 
     def setupUi(self):
         self.resize(1096, 900)
