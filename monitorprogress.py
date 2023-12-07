@@ -14,6 +14,12 @@ class ProgressWindow(QWidget):
         self.main_window=main_window
         self.setup_UI()
 
+    def remove_progress_bar(self,progid,label):
+        # print(progid,type(progid))
+        label.deleteLater()
+        # progid.deleteLater()
+
+
     def add_progress_bar(self, directory):
         label = QLabel(self.body)
         label.setStyleSheet("border:1px solid black;")
@@ -23,15 +29,17 @@ class ProgressWindow(QWidget):
         progress_bar = QProgressBar(label)
         progress_bar.setStyleSheet("margin:0px auto !important;")
         progress_bar.setFixedSize(451, 41)
+        # progress_bar.find
 
         # Set a fixed stretch factor to control the spacing
         self.body_layout.addWidget(label)
         # print('appending: ',progress_bar)
-
+        self.progress_labels.append(label)
         self.progress_bars.append(progress_bar)  # Add the progress bar to the list
-        return progress_bar  # Return the progress bar for further updates
+        return progress_bar,label  # Return the progress bar for further updates
 
     def set_progress(self, value, progress_bar):
+        # print(progress_bar,type(progress_bar))
         # print('to update: ', progress_bar)
         if progress_bar in self.progress_bars:
             progress_bar.setValue(value)
@@ -42,10 +50,11 @@ class ProgressWindow(QWidget):
         self.centralwidget = QWidget(self)
         self.centralwidget.resize(1096, 800)
         self.centralwidget.setObjectName("centralwidget")
-        self.progress_bars = []  # Create a list to store progress bars
+        self.progress_bars = []
+        self.progress_labels=[] 
         self.body_layout = QVBoxLayout()
         self.main_layout=QVBoxLayout()
-        self.header=HeaderWidget(self.main_window,self.centralwidget)
+        self.header=HeaderWidget(self.main_window,self)
         # self.header.setFixedSize(1100,200)
         
         self.body=QWidget(self.centralwidget)
@@ -55,11 +64,11 @@ class ProgressWindow(QWidget):
         self.centralwidget.setLayout(self.main_layout)
         # self.body.setContentsMargins
         # self.body.setGeometry(QRect(0, 250, 1100, 550))
-        self.pushButton_5=PushButton(self.centralwidget,True)
-        self.pushButton_5.setText('Back')
-        self.pushButton_5.setGeometry(QRect(770, 660, 121, 41))
-        self.pushButton_5.setObjectName("pushButton_5")
-        self.pushButton_5.clicked.connect(self.open_dashboard)
+        # self.pushButton_5=PushButton(self.centralwidget,True)
+        # self.pushButton_5.setText('Back')
+        # self.pushButton_5.setGeometry(QRect(770, 660, 121, 41))
+        # self.pushButton_5.setObjectName("pushButton_5")
+        # self.pushButton_5.clicked.connect(self.open_dashboard)
 
         self.retranslateUi(self)
         QtCore.QMetaObject.connectSlotsByName(self)

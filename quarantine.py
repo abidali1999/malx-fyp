@@ -8,7 +8,7 @@ from cryptography.fernet import Fernet
 
 # Initialize the database file and table if not already done
 DATABASE_FILE = "quarantine_db.sqlite"
-QUARANTINE_DIRECTORY = "C:\\Users\\user\\AppData\\Local\\malx\\quarantine_zone"
+QUARANTINE_DIRECTORY = "projekt_fyp\\malxV2\\quarantine_zone"
 
 def initialize_database():
     conn = sqlite3.connect(DATABASE_FILE)
@@ -81,11 +81,11 @@ class Ui_Quarantine(QWidget):
 
     def initUI(self):
         self.setWindowTitle('Quarantined Files')
-        self.setGeometry(100, 100, 1000, 800)
+        self.setGeometry(100, 100, 1100, 900)
 
         scroll_area = QScrollArea(self)
         scroll_area.setWidgetResizable(True)
-        scroll_area.setGeometry(0, 100, 1000, 800)
+        scroll_area.setGeometry(0, 100, 1100, 900)
         self.header = HeaderWidget(self.main_window, self)
 
         self.widget = QWidget(scroll_area)

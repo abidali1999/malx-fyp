@@ -41,17 +41,19 @@ class DirectoryScan(QtWidgets.QWidget):
         self.pushButton_5.setGeometry(QtCore.QRect(770, 660, 121, 41))
         self.pushButton_5.setObjectName("pushButton_5")
         self.pushButton_5.clicked.connect(self.open_dashboard)
-        self.progressBar = QtWidgets.QProgressBar(self.centralwidget)
-        self.progressBar.setGeometry(QtCore.QRect(310, 160, 451, 41))
-        self.progressBar.setProperty("value", 24)
-        self.progressBar.setObjectName("progressBar")
+        # self.progressBar = QtWidgets.QProgressBar(self.centralwidget)
+        # self.progressBar.deleteLater()
+        # self.progressBar.setGeometry(QtCore.QRect(310, 160, 451, 41))
+        # self.progressBar.setProperty("value", 24)
+        # self.progressBar.setObjectName("progressBar")
+        # self.progressBar.hide
         # self.menubar = QtWidgets.QMenuBar(self)
         # self.menubar.setGeometry(QtCore.QRect(0, 0, 1096, 22))
         # self.menubar.setObjectName("menubar")
         # self.statusbar = QtWidgets.QStatusBar(self)
         # self.statusbar.setObjectName("statusbar")
         self.scanning = False
-        self.progressBar.hide()
+        # self.progressBar.hide()
         self.progress_thread = QThread()
         self.progress_worker = ProgressWorker()
         self.progress_worker.moveToThread(self.progress_thread)
@@ -86,11 +88,12 @@ class DirectoryScan(QtWidgets.QWidget):
             # self.pushButton_4.clicked.connect(self.toggle_scan)
         
     def update_progress(self, value,progid):
-        self.progressBar.setValue(value)
+        # self.progressBar.setValue(value)
         self.main_window.progress_window.set_progress(value,progid)
 
     def go_back(self):
-        print('going back')
+        self.main_window.showDashboard()
+        # print('going back')
         # self.pushButton_4.setText("Back")
         # self.pushButton_4.disconnect()
         # self.pushButton_4.clicked.connect(self.toggle_scan)
@@ -101,7 +104,8 @@ class DirectoryScan(QtWidgets.QWidget):
         print(self.selected_directory)
         self.choosen_directory.setText(self.selected_directory)
 
-    def make_scan_entry(self,directory,threats_found,date_today,scanned_files,total_time,threats_quarantined):
+    def make_scan_entry(self,progid,label,directory,threats_found,date_today,scanned_files,total_time,threats_quarantined):
+        self.main_window.progress_window.remove_progress_bar(progid,label)
         import requests
         url= "https://abidali1999063.pythonanywhere.com/record_api"
         data_scan = {
@@ -134,11 +138,14 @@ class DirectoryScan(QtWidgets.QWidget):
 
         print(self.selected_directory)
         if self.selected_directory:
-            prog=self.main_window.progress_window.add_progress_bar(self.selected_directory)
+            prog,label=self.main_window.progress_window.add_progress_bar(self.selected_directory)
+            # self.label=label
             # print('as returned: ', prog)
+            # 
+            QtWidgets.QMessageBox.information(self, 'Scanning..', 'Scan has initiated, Visit \'Progress Monitoring\' to see progress')
             self.active_scans.append(prog)
             if not self.scanning: self.toggle_scan()  
-            self.progress_worker.start_scan(self.selected_directory,prog,self.make_scan_entry)
+            self.progress_worker.start_scan(label,self.selected_directory,prog,self.make_scan_entry)
 
             self.go_back()
         
@@ -148,8 +155,8 @@ class DirectoryScan(QtWidgets.QWidget):
         self.pushButton_3.setText(_translate("directorywindow", "CHOOSE DIRECTORY "))
         self.pushButton_4.setText(_translate("directorywindow", "SCAN"))
         self.pushButton_5.setText(_translate("directorywindow", "BACK"))
-        self.progressBar.setToolTip(_translate("directorywindow", "<html><head/><body><p><br/></p></body></html>"))
-        self.progressBar.setWhatsThis(_translate("directorywindow", "<html><head/><body><p><br/></p></body></html>"))
+        # self.progressBar.setToolTip(_translate("directorywindow", "<html><head/><body><p><br/></p></body></html>"))
+        # self.progressBar.setWhatsThis(_translate("directorywindow", "<html><head/><body><p><br/></p></body></html>"))
 
 
 if __name__ == "__main__":

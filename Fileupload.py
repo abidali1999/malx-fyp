@@ -19,11 +19,21 @@ class Ui_Fileupload(QtWidgets.QWidget):
         
         
     def select_file(self):
+        # options = QFileDialog.Options()
+        # options |= QFileDialog.ReadOnly
+        # self.selected_file_path, _ = QFileDialog.getOpenFileName(
+        #     None, "Select a File to Upload", "", "All Files (*)", options=options
+        # )
         options = QFileDialog.Options()
         options |= QFileDialog.ReadOnly
+        
+        # Set the file filter to limit file types
+        file_filter = "Accepted Files (*.dll *.exe *.pdf *.html *.malx)"
+        
         self.selected_file_path, _ = QFileDialog.getOpenFileName(
-            None, "Select a File to Upload", "", "All Files (*)", options=options
+            None, "Select a File to Upload", "", file_filter, options=options
         )
+    
         self.label_9.setText(f"Selected File: {self.selected_file_path}")
         
     def scan(self):
@@ -68,9 +78,11 @@ class Ui_Fileupload(QtWidgets.QWidget):
         self.drag_and_drop_label.setObjectName("drag_and_drop_label")
         self.drag_and_drop_label.dragEnterEvent = self.handle_drag_enter_event
         self.drag_and_drop_label.dropEvent = self.handle_drop_event
-        self.label_6 = DragnDropLabel(self.centralwidget)
-        self.label_6.setGeometry(QtCore.QRect(270, 400, 150, 100))
-        self.label_6.setStyleSheet("image:url(:/newPrefix/images/scanner.png);\n""background-repeat:no-repeat !important;\n""text-align:center !important;\n""margin:0px auto !important;")
+        self.label_6 = QtWidgets.QLabel(self.drag_and_drop_label)
+        self.label_6.setGeometry(QtCore.QRect(40, 60, 150, 100))
+
+        # self.label_6.setGeometry(QtCore.QRect(270, 400, 150, 100))
+        self.label_6.setStyleSheet("image:url(:/newPrefix/images/scanner.png);\n""border: none;""background-repeat:no-repeat !important;\n""text-align:center !important;\n""margin:0px auto !important;")
         self.label_6.setText("")
         self.label_6.setWindowFlag(Qt.WindowStaysOnTopHint)
         self.label_6.setObjectName("label_6")
@@ -103,12 +115,12 @@ class Ui_Fileupload(QtWidgets.QWidget):
         mime_data = event.mimeData()
         if mime_data.hasUrls():
             file_url = mime_data.urls()[0].toLocalFile()
-            if file_url.endswith(('.dll', '.exe', '.pdf', '.html','')):
+            if file_url.endswith(('.dll', '.exe', '.pdf', '.html', '.malx')):
                 self.selected_file_path = file_url
                 self.label_9.setText(f"Selected File: {file_url}")
                 event.accept()
             else:
-                QtWidgets.QMessageBox.warning(None, "Invalid File Type", "Please select an image file (jpg, jpeg, png, gif, bmp).")
+                QtWidgets.QMessageBox.warning(None, "Invalid File Type", "Supported extensions: *.dll *.exe *.pdf *.html")
         else:
             event.ignore()
 

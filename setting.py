@@ -28,7 +28,7 @@ class Ui_settings(QtWidgets.QWidget):
         phone=self.Emailfield_6.text().strip()
         url='https://abidali1999063.pythonanywhere.com/update_account'
         try: oldemail=self.main_window.userid
-        except: oldemail='waseem123@gmail.com'
+        except: oldemail=''
         
         data={'old_email':oldemail,'name':name,'email':email,'password':password,'phone':phone}
         print(data)
@@ -374,6 +374,5 @@ from qrc import source_rc
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    ui = Ui_settings(app)
-    ui.show()
+    Ui_settings(app).show()
     sys.exit(app.exec_())

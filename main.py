@@ -60,6 +60,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(self.stackedWidget)
         self.showlogin()
 
+
     def showDashboard(self):
         self.stackedWidget.setCurrentWidget(self.dashboard)
     def showDirectoryScan(self):

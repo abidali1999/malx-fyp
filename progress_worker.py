@@ -24,7 +24,7 @@ class ProgressWorker(QObject):
         self.threats_quarantined=0
         self.completed_event = threading.Event()
 
-    def start_scan(self, directory, progid, callback):
+    def start_scan(self, label,directory, progid, callback):
         self.progid = progid
         self.total_files = len(os.listdir(directory))
         self.scanned_files = 0
@@ -33,7 +33,7 @@ class ProgressWorker(QObject):
                 try:
                     if entry.is_file():
                         with self.lock:
-                            if any([entry.name.endswith(".dll"), entry.name.endswith(".exe"),entry.name.endswith(".pdf"),entry.name.endswith(".html")]):
+                            if any([entry.name.endswith(".dll"), entry.name.endswith(".exe"),entry.name.endswith(".pdf"),entry.name.endswith(".html"),entry.name.endswith(".malx")]):
                                 self.scanned_files += 1
                                 self.scanned_files = min(self.scanned_files, self.total_files)
                                 self.total_files += 1
@@ -50,7 +50,11 @@ class ProgressWorker(QObject):
                                 predicted_class = class_labels[predicted_class_index]
                                 print(predicted_class)
                                 if predicted_class!='benign': 
-                                    print('malicious file: ',entry.path)
+                                    # print('malicious file: ',entry.path)
+                                    self.threats_found+=1
+                                    self.threats_quarantined+=1
+                                    encrypt_and_move_to_quarantine(entry.path)
+                                if entry.name.endswith(".malx"):
                                     self.threats_found+=1
                                     self.threats_quarantined+=1
                                     encrypt_and_move_to_quarantine(entry.path)
@@ -67,11 +71,12 @@ class ProgressWorker(QObject):
                     with self.lock:
                         self.total_files -= files_in_this_folder
                     print(repr(e))
+            return progid,label
                     # You might want to log or display the error.
 
         def start_scan_in_thread():
             start = time.time()
-            scan_directory(directory, self.total_files)
+            progid,label=scan_directory(directory, self.total_files)
             total_time_s = time.time() - start
             self.total_time = f'{int(total_time_s//60)}m, {int(total_time_s%60)}s'
             date_today = datetime.today().strftime('%Y-%m-%d-%H-%M')
@@ -81,7 +86,7 @@ class ProgressWorker(QObject):
             print("Scanning completed. Total files:", self.total_files)
 
             if callback:
-                callback(directory,self.threats_found,date_today,self.scanned_files,self.total_time,self.threats_quarantined)
+                callback(progid,label,directory,self.threats_found,date_today,self.scanned_files,self.total_time,self.threats_quarantined)
 
         # Create a thread to execute the scan_directory function
         scan_thread = threading.Thread(target=start_scan_in_thread)

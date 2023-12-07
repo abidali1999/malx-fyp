@@ -2,6 +2,7 @@ from MyPushButton import PushButton
 from PyQt5 import QtCore, QtWidgets
 from qrc import source_rc
 from my_header import HeaderWidget
+from PyQt5.QtCore import Qt
 
 
 class Dashboard(QtWidgets.QWidget):
@@ -57,6 +58,8 @@ class Dashboard(QtWidgets.QWidget):
         self.pushButton_3.setStyleSheet("background:white;\n""border:1px solid black;\n""font-weight:bold;\n""font-size:13px;")
         self.pushButton_3.setObjectName("pushButton_3")
         self.pushButton_3.clicked.connect(self.openscan)
+        self.pushButton_3.enterEvent = lambda event: self.pushButton_3.setCursor(Qt.PointingHandCursor)
+        self.pushButton_3.leaveEvent = lambda event: self.pushButton_3.setCursor(Qt.ArrowCursor)
         
         self.filebtn = PushButton(self.centralwidget,True)
         self.filebtn.setGeometry(QtCore.QRect(120, 310, 181, 191))
@@ -146,7 +149,7 @@ class Dashboard(QtWidgets.QWidget):
         self.helpbtn.setGeometry(QtCore.QRect(580, 540, 181, 191))
         self.helpbtn.setObjectName("helpbtn")
         self.helpimg = QtWidgets.QLabel(self.helpbtn)
-        self.helpimg.setGeometry(QtCore.QRect(30, 25, 121, 91))
+        self.helpimg.setGeometry(QtCore.QRect(35, 30, 121, 91))
         self.helpimg.setStyleSheet("image:url(:/newPrefix/images/question.png);\n""background-repeat:no-repeat !important;\n""text-align:center !important;\n""margin:0px auto !important;")
         self.helpimg.setObjectName("helpimg")
         self.helplabel = QtWidgets.QLabel(self.helpbtn)
