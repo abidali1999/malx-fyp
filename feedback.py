@@ -10,6 +10,7 @@
 import requests
 from PyQt5 import QtCore, QtGui, QtWidgets
 from my_header import HeaderWidget
+from PyQt5.QtCore import Qt
 
 from PyQt5.QtCore import QDate
 
@@ -30,10 +31,11 @@ class Ui_Feedbackwindow(QtWidgets.QWidget):
         try: email=self.main_window.userid
         except: email='boota@gmail.com'
         # date='12523'
-        date = QDate.currentDate().toString("dd/MM/yyyy")
+        date = QDate.currentDate().toString("yyyy-MM-dd")
 
         print(date)
         data={'email':email,'comment':feedback,'date':date}
+        print(data)
         r=requests.post(url,json=data)
         print(r.text)
         print(r.status_code)
@@ -139,6 +141,8 @@ class Ui_Feedbackwindow(QtWidgets.QWidget):
         self.pushButton_3.setObjectName("pushButton_3")
 
         self.pushButton_3.clicked.connect(self.go_back)
+        self.pushButton_3.enterEvent = lambda event: self.pushButton_3.setCursor(Qt.PointingHandCursor)
+        self.pushButton_3.leaveEvent = lambda event: self.pushButton_3.setCursor(Qt.ArrowCursor)
         self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_4.setGeometry(QtCore.QRect(620, 690, 121, 41))
         self.pushButton_4.setStyleSheet("background:white;\n"
@@ -148,6 +152,8 @@ class Ui_Feedbackwindow(QtWidgets.QWidget):
 "font-size:14px;")
         self.pushButton_4.setObjectName("pushButton_4")
         self.pushButton_4.clicked.connect(self.submit_feedback)
+        self.pushButton_4.enterEvent = lambda event: self.pushButton_4.setCursor(Qt.PointingHandCursor)
+        self.pushButton_4.leaveEvent = lambda event: self.pushButton_4.setCursor(Qt.ArrowCursor)
 
 
 

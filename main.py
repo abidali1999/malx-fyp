@@ -73,6 +73,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def showprogress(self):
         self.stackedWidget.setCurrentWidget(self.progress_window)
     def showscans(self):
+        self.scans.setupUI()
         self.stackedWidget.setCurrentWidget(self.scans)
     def showreport(self):
         self.stackedWidget.setCurrentWidget(self.report)
@@ -90,6 +91,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.isloggedin: self.stackedWidget.setCurrentWidget(self.profile)
         else: self.stackedWidget.setCurrentWidget(self.login)
     def showquarantine(self):
+        self.quarantine.initUI()
         self.stackedWidget.setCurrentWidget(self.quarantine)
 
 class BackgroundLabel(QLabel):

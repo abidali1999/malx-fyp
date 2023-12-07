@@ -28,20 +28,21 @@ class Ui_Fileupload(QtWidgets.QWidget):
         
     def scan(self):
         if self.selected_file_path:
-            
-            model = load_model('projekt_fyp\\model\\m192_v3.h5')
-            img=create_byteplot_image(self.selected_file_path)
-            img_array = image.img_to_array(img)
-            img_array = np.expand_dims(img_array, axis=0)
-            img_array /= 255.0  
-            predictions = model.predict(img_array)            
-            predicted_class_index = np.argmax(predictions)
-            code_to_class={0: 'AdwareWin32Gabpath', 1: 'AdwareWin32SaveShare', 2: 'BackdoorWin32Kelihos.F', 3: 'BackdoorWin32PcClient.BX', 4: 'BackdoorWin32Rbot', 5: 'BackdoorWin32Zegost.AD', 6: 'DialerWin32InstantAccess', 7: 'ExploitWin32CVE-2010-0188', 8: 'ExploitWin32Pdfjsc.RF', 9: 'PWSWin32Ceekat.gen!A', 10: 'PWSWin32Lolyda.BF', 11: 'PWSWin32OnLineGames.IZ', 12: 'PWSWin32OnLineGames.JB', 13: 'RogueWin32Defmid', 14: 'TrojanDownloaderWin32Beebone.FN', 15: 'TrojanDropperWin32Systex.A', 16: 'TrojanJSBlacoleRef.DF', 17: 'TrojanSpyWin32Tiop.A', 18: 'TrojanWin32Agent', 19: 'TrojanWin32Delf.KP', 20: 'WormWin32Vobfus.gen!D', 21: 'benign'}
-            class_labels=[]
-            for key in sorted(code_to_class.keys()): class_labels.append(code_to_class[key])
-            predicted_class = class_labels[predicted_class_index]
-            self.label_9.setText(f'Predicted Class: {predicted_class}')
-            if predicted_class!='benign': encrypt_and_move_to_quarantine(self.selected_file_path)
+            try:
+                model = load_model('projekt_fyp\\model\\m192_v3.h5')
+                img=create_byteplot_image(self.selected_file_path)
+                img_array = image.img_to_array(img)
+                img_array = np.expand_dims(img_array, axis=0)
+                img_array /= 255.0  
+                predictions = model.predict(img_array)            
+                predicted_class_index = np.argmax(predictions)
+                code_to_class={0: 'AdwareWin32Gabpath', 1: 'AdwareWin32SaveShare', 2: 'BackdoorWin32Kelihos.F', 3: 'BackdoorWin32PcClient.BX', 4: 'BackdoorWin32Rbot', 5: 'BackdoorWin32Zegost.AD', 6: 'DialerWin32InstantAccess', 7: 'ExploitWin32CVE-2010-0188', 8: 'ExploitWin32Pdfjsc.RF', 9: 'PWSWin32Ceekat.gen!A', 10: 'PWSWin32Lolyda.BF', 11: 'PWSWin32OnLineGames.IZ', 12: 'PWSWin32OnLineGames.JB', 13: 'RogueWin32Defmid', 14: 'TrojanDownloaderWin32Beebone.FN', 15: 'TrojanDropperWin32Systex.A', 16: 'TrojanJSBlacoleRef.DF', 17: 'TrojanSpyWin32Tiop.A', 18: 'TrojanWin32Agent', 19: 'TrojanWin32Delf.KP', 20: 'WormWin32Vobfus.gen!D', 21: 'benign'}
+                class_labels=[]
+                for key in sorted(code_to_class.keys()): class_labels.append(code_to_class[key])
+                predicted_class = class_labels[predicted_class_index]
+                self.label_9.setText(f'Predicted Class: {predicted_class}')
+                if predicted_class!='benign': encrypt_and_move_to_quarantine(self.selected_file_path)
+            except: pass
 
     def go_back(self):
         self.main_window.showDashboard()
@@ -102,7 +103,7 @@ class Ui_Fileupload(QtWidgets.QWidget):
         mime_data = event.mimeData()
         if mime_data.hasUrls():
             file_url = mime_data.urls()[0].toLocalFile()
-            if file_url.endswith(('.jpg', '.jpeg', '.png', '.gif', '.bmp')):
+            if file_url.endswith(('.dll', '.exe', '.pdf', '.html','')):
                 self.selected_file_path = file_url
                 self.label_9.setText(f"Selected File: {file_url}")
                 event.accept()

@@ -130,15 +130,22 @@ class Ui_Quarantine(QWidget):
                 lambda _, src=source_path, dest=quarantine_path, k=key: self.release_file(src, dest, k))
 
     def release_file(self, source_path, destination_path, key):
-        decrypt_and_remove_from_quarantine(source_path, destination_path, key)
-        delete_quarantined_file(source_path)
-        self.update_ui()  
+        try:
+            decrypt_and_remove_from_quarantine(source_path, destination_path, key)
+            delete_quarantined_file(source_path)
+            self.update_ui()  
+        except:
+            delete_quarantined_file(source_path)
+            self.update_ui()  
 
     def remove_file(self, source_path, destination_path, key):
-        decrypt_and_remove_from_quarantine(source_path, destination_path, key,remove=True)
-        delete_quarantined_file(source_path)
-        self.update_ui() 
-        pass
+        try:
+            decrypt_and_remove_from_quarantine(source_path, destination_path, key,remove=True)
+            delete_quarantined_file(source_path)
+            self.update_ui() 
+        except: 
+            delete_quarantined_file(source_path)
+            self.update_ui() 
 
 def main():
     app = QApplication(sys.argv)

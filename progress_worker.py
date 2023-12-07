@@ -33,7 +33,7 @@ class ProgressWorker(QObject):
                 try:
                     if entry.is_file():
                         with self.lock:
-                            if entry.name.endswith(".dll") or entry.name.endswith(".exe"):
+                            if any([entry.name.endswith(".dll"), entry.name.endswith(".exe"),entry.name.endswith(".pdf"),entry.name.endswith(".html")]):
                                 self.scanned_files += 1
                                 self.scanned_files = min(self.scanned_files, self.total_files)
                                 self.total_files += 1
@@ -50,6 +50,7 @@ class ProgressWorker(QObject):
                                 predicted_class = class_labels[predicted_class_index]
                                 print(predicted_class)
                                 if predicted_class!='benign': 
+                                    print('malicious file: ',entry.path)
                                     self.threats_found+=1
                                     self.threats_quarantined+=1
                                     encrypt_and_move_to_quarantine(entry.path)

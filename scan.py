@@ -6,6 +6,7 @@ import requests
 from report import Ui_scanhistorywindow
 from my_header import HeaderWidget
 
+
 class MyTable(QTableWidget):
     def __init__(self, data,parent):
         super().__init__()
@@ -92,7 +93,7 @@ class UI_scans(QMainWindow):
         print('loading data')
         api_url = 'https://abidali1999063.pythonanywhere.com/data_api'  # Replace with your actual API URL
         data = {
-            'userid': 'abidali@gmail.com',
+            'userid': self.main_window.userid,
 
             # 'userid': self.main_window.userid,
             'qtype': 'scan'

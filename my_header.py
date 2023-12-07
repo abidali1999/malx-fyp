@@ -1,5 +1,5 @@
 # header_widget.py
-from PyQt5.QtWidgets import QWidget, QLabel,QApplication,QFrame,QPushButton
+from PyQt5.QtWidgets import QWidget, QLabel,QApplication,QFrame,QPushButton,QMessageBox
 from PyQt5 import QtCore
 from qrc import source_rc
 from MyPushButton import PushButton
@@ -28,6 +28,13 @@ class HeaderWidget(QWidget):
 
     def showhelp(self):
         self.main_window.showhelp()
+
+    def confirmlogout(self):
+        result = QMessageBox.question(None, "Logout", "Do you want to logout?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        logout=result == QMessageBox.Yes
+        if logout:
+            self.main_window.showlogin()
+
 
     def setupUi(self):
         self.resize(1096, 100)
@@ -86,10 +93,10 @@ class HeaderWidget(QWidget):
         self.btn5.setFlat(True)
         self.btn5.enterEvent = lambda event: self.btn5.setCursor(Qt.PointingHandCursor)
         self.btn5.leaveEvent = lambda event: self.btn5.setCursor(Qt.ArrowCursor)
-        self.btn5.clicked.connect(self.showhelp)
+        self.btn5.clicked.connect(self.confirmlogout)
         self.label_5=QLabel(self.btn5)
-        self.label_5.setGeometry(QtCore.QRect(-30, -10, 140, 100))
-        self.label_5.setStyleSheet("image:url(:/newPrefix/images/question.png);\n""background-repeat:no-repeat !important;\n""text-align:center !important;\n""margin:0px auto !important;")
+        self.label_5.setGeometry(QtCore.QRect(-20, -5, 130, 90))
+        self.label_5.setStyleSheet("image:url(:/newPrefix/images/logout.png);\n""background-repeat:no-repeat !important;\n""text-align:center !important;\n""margin:0px auto !important;")
         self.label_5.setObjectName("label_5")
 
         self.horizontalLine = QFrame(self.main_wid)

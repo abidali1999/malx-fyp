@@ -114,7 +114,7 @@ class DirectoryScan(QtWidgets.QWidget):
         # url_report = "http://your-flask-app-url/record_api"
         
         response = requests.post(url, data=data_scan)
-        print(response.status_code,response.text)
+        print(response.status_code,response.text, 'added record')
         last_id=response.json()['insert_id']
         data_report = {
             "qtype": "report",

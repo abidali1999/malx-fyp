@@ -47,6 +47,7 @@ class ProgressWindow(QWidget):
         self.main_layout=QVBoxLayout()
         self.header=HeaderWidget(self.main_window,self.centralwidget)
         # self.header.setFixedSize(1100,200)
+        
         self.body=QWidget(self.centralwidget)
         self.body.setLayout(self.body_layout)
         self.main_layout.addWidget(self.header)
